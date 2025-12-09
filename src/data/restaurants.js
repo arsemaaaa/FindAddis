@@ -2,6 +2,7 @@
 import LucyImg from "../assets/lucy.jpg";
 import ItalianoImg from "../assets/italiano.webp";
 import AddisImg from "../assets/addis-cafe.jpg";
+import Placeholder from "../assets/addis-cafe.jpg";
 
 const SAMPLE_RESTAURANTS = [
   {
