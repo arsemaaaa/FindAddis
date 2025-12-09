@@ -14,6 +14,7 @@ import Signup from "./pages/Signup";
 import UserProfilePage from "./pages/UserProfilePage";
 import Favorites from "./pages/Favorites";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
 import { RestaurantsProvider } from "./context/RestaurantsContext";
@@ -44,6 +45,7 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/profile" element={<UserProfilePage />} />
                 <Route path="/favorites" element={<Favorites />} />
+                <Route path="/contact" element={<Contact />} />
                 <Route path="/about" element={<About />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

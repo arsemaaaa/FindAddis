@@ -37,7 +37,7 @@ function RestaurantDetailsPage() {
             <h3>Reviews</h3>
             {r.reviews && r.reviews.length === 0 && <div>No reviews yet—be the first.</div>}
             <div className="reviews-list">
-              {r.reviews.map((rev) => <ReviewCard key={rev.id} review={rev} />)}
+              {r.reviews.map((rev) => <ReviewCard key={rev.id} review={rev} restaurantId={r.id} />)}
             </div>
             <div className="write-review-actions">
               <button className="button button-primary" onClick={() => navigate(`/write-review?restaurant=${r.id}`)}>Write a review</button>

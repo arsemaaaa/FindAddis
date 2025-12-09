@@ -3,7 +3,7 @@ import InputField from "../common/InputField";
 import Button from "../common/Button";
 
 function SignupForm({ onSignup }) {
-  const [form, setForm] = React.useState({ name: "", email: "", password: "" });
+  const [form, setForm] = React.useState({ name: "", email: "", password: "", role: "user" });
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,6 +19,13 @@ function SignupForm({ onSignup }) {
       <InputField name="name" label="Name" value={form.name} onChange={handleChange} placeholder="Your name" />
       <InputField name="email" label="Email" value={form.email} onChange={handleChange} placeholder="you@example.com" />
       <InputField name="password" label="Password" type="password" value={form.password} onChange={handleChange} placeholder="Choose a password" />
+      <div className="form-row">
+        <label className="input-label">Role</label>
+        <select name="role" value={form.role} onChange={handleChange} className="input-field">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
       <Button type="submit">Create account</Button>
     </form>
   );

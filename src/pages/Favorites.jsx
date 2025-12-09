@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
+import RestaurantsContext from "../context/RestaurantsContext";
+import RestaurantList from "../components/restaurant/RestaurantList";
 
 function Favorites() {
-  // For now this is static - later wire to user favorites
+  const { restaurants, favorites } = useContext(RestaurantsContext);
+  const favRestaurants = restaurants.filter((r) => favorites.includes(r.id));
+
   return (
     <div className="favorites-page container">
       <h1 className="page-title">Favorites</h1>
-      <p className="muted">You haven't saved any restaurants yet.</p>
+      {favRestaurants.length === 0 ? (
+        <p className="muted">You haven't saved any restaurants yet.</p>
+      ) : (
+        <RestaurantList restaurants={favRestaurants} />
+      )}
     </div>
   );
 }
