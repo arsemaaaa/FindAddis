@@ -1,0 +1,36 @@
+/* =======================
+   Reset & Base Styles
+======================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    background-color: #fafafa;
+    color: #222;
+    line-height: 1.5;
+}
+
+/* ensure the background covers full viewport behind content */
+.app-root {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* blurred background using pseudo-element (keeps content sharp) */
+.app-root::before {
+    display: none;
+}
+
+.app-root::after {
+    display: none;
+}
+
+.app-root>* {
+    position: relative;
+    z-index: 0;
+}

@@ -13,7 +13,7 @@ function HeroSection({ onQuickSearch }) {
   useEffect(() => {
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % slides.length);
-    }, 2000); // faster timer (2s)
+    }, 5000);
     return () => clearInterval(id);
   }, [slides.length]);
 

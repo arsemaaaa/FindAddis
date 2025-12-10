@@ -2,14 +2,18 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import StarRating from "../common/StarRating";
 import RestaurantsContext from "../../context/RestaurantsContext";
+import Placeholder from "../../assets/addis-cafe.jpg";
 
 
 function RestaurantCard({ restaurant }) {
   const { toggleFavorite, isFavorite } = useContext(RestaurantsContext);
   const fav = isFavorite ? isFavorite(restaurant.id) : false;
 
-  const imgSrc = (restaurant.images && restaurant.images.length > 0 && restaurant.images[0]) || Placeholder;
-
+ const imgSrc =
+    (restaurant.images &&
+      restaurant.images.length > 0 &&
+      restaurant.images[0]) ||
+    Placeholder;
   return (
     <div className="restaurant-card">
       <div className="restaurant-image-wrap">

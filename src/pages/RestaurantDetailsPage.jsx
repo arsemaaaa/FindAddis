@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import RestaurantsContext from "../context/RestaurantsContext";
 import { useContext } from "react";
 import MenuSection from "../components/restaurant/MenuSection";
-import ReviewCard from "../components/restaurant/ReviewCard";
+import ReviewCard from "../components/restaurant/Reviewcard";
 import StarRating from "../components/common/StarRating";
 
 

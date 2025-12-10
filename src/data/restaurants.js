@@ -2,6 +2,9 @@
 import LucyImg from "../assets/lucy.jpg";
 import ItalianoImg from "../assets/italiano.webp";
 import AddisImg from "../assets/addis-cafe.jpg";
+import kategnaImg from "../assets/kategna.png";
+import tomocaImg from "../assets/tomoca.png";
+import Placeholder from "../assets/addis-cafe.jpg";
 
 const SAMPLE_RESTAURANTS = [
   {
@@ -26,7 +29,7 @@ const SAMPLE_RESTAURANTS = [
     rating: 4.5,
     price: "$",
     address: "Multiple locations, Addis Ababa",
-    images: [Placeholder],
+    images: [tomocaImg],
     hours: "07:00 - 20:00",
     description: "Historic Ethiopian coffee roaster, known for strong, aromatic brews.",
     menu: ["Ethiopian coffee", "Pastries"],
@@ -39,7 +42,7 @@ const SAMPLE_RESTAURANTS = [
     rating: 4.4,
     price: "$$",
     address: "Old Airport, Addis Ababa",
-    images: [Placeholder],
+    images: [kategnaImg],
     hours: "10:00 - 22:00",
     description: "Local favorite serving homestyle Ethiopian favorites in a relaxed setting.",
     menu: ["Kitfo", "Tibs"],

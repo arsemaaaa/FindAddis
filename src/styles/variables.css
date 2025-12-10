@@ -1,0 +1,8 @@
+:root {
+    --accent: #3b6b74;
+    /* muted teal/gray */
+    --accent-dark: #2f5b61;
+    --muted: #6b7280;
+    --card-bg: #ffffff;
+    --overlay: rgba(255, 255, 255, 0.72);
+}

@@ -6,7 +6,7 @@ const RestaurantsContext = React.createContext();
 export function RestaurantsProvider({ children }) {
   const [restaurants, setRestaurants] = React.useState(() => {
     try {
-      const raw = localStorage.getItem("fa_restaurants");
+      const raw = localStorage.getItem("fa_restaurants_v1");
       return raw ? JSON.parse(raw) : SAMPLE_RESTAURANTS;
     } catch (e) {
       return SAMPLE_RESTAURANTS;
@@ -24,14 +24,14 @@ export function RestaurantsProvider({ children }) {
 
   React.useEffect(() => {
     try {
-      localStorage.setItem("fa_restaurants", JSON.stringify(restaurants));
-    } catch (e) {}
+      localStorage.setItem("fa_restaurants_v1", JSON.stringify(restaurants));
+    } catch (e) { }
   }, [restaurants]);
 
   React.useEffect(() => {
     try {
       localStorage.setItem("fa_favorites", JSON.stringify(favorites));
-    } catch (e) {}
+    } catch (e) { }
   }, [favorites]);
 
   function addReview(restaurantId, review) {

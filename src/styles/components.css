@@ -1,0 +1,138 @@
+/* =======================
+   Buttons
+======================= */
+.button {
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.button-primary {
+    background-color: var(--accent);
+    color: #fff;
+}
+
+.button-primary:hover {
+    background-color: var(--accent-dark);
+}
+
+.button-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.button-ghost {
+    background: transparent;
+    border: 1px solid #ddd;
+    color: white;
+}
+
+.button-small {
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+/* =======================
+   Inputs & Dropdowns
+======================= */
+.input-field-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-label {
+    font-size: 13px;
+    color: #333;
+    font-weight: 500;
+}
+
+.input-field {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.input-field:focus {
+    border-color: var(--accent);
+    outline: none;
+}
+
+.dropdown-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.dropdown-select {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+/* =======================
+   Star Ratings
+======================= */
+.star-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.star {
+    fill: #ddd;
+}
+
+.star-filled {
+    fill: #f5b50a;
+}
+
+.star-value {
+    font-size: 13px;
+    color: #555;
+}
+
+/* =======================
+   Modal
+======================= */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+
+.modal-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.modal-close {
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
