@@ -4,7 +4,7 @@ import ItalianoImg from "../assets/italiano.webp";
 import AddisImg from "../assets/addis-cafe.jpg";
 import kategnaImg from "../assets/kategna.png";
 import tomocaImg from "../assets/tomoca.png";
-
+import Placeholder from "../assets/addis-cafe.jpg";
 
 const SAMPLE_RESTAURANTS = [
   {
