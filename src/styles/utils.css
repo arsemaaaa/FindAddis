@@ -6,6 +6,31 @@
     margin-bottom: 16px;
 }
 
+.section-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 24px;
+    letter-spacing: -0.5px;
+    position: relative;
+    padding-bottom: 12px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+}
+
+.home-section {
+    padding: 48px 0;
+}
+
 .muted {
     color: #777;
 }
@@ -14,4 +39,465 @@
     padding: 40px;
     text-align: center;
     color: #999;
+}
+
+/* =======================
+   Page Header
+======================= */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.results-count {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.section-view-all {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all var(--transition-base);
+}
+
+.section-view-all:hover {
+    color: var(--accent-dark);
+    transform: translateX(4px);
+}
+
+/* =======================
+   Empty State
+======================= */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.empty-state-icon {
+    color: var(--muted-light);
+    margin-bottom: 20px;
+}
+
+.empty-state-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 12px;
+}
+
+.empty-state-message {
+    color: var(--muted);
+    margin-bottom: 24px;
+    line-height: 1.6;
+}
+
+.empty-state-suggestions {
+    text-align: left;
+    background: var(--accent-subtle);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.empty-state-suggestions-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-dark);
+    margin-bottom: 12px;
+}
+
+.empty-state-suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.empty-state-suggestions-list li {
+    padding: 6px 0;
+    color: var(--muted);
+    font-size: 14px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.empty-state-suggestions-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.empty-state-action {
+    margin-top: 20px;
+}
+
+/* =======================
+   Toast Notifications
+======================= */
+.toast-container {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none;
+}
+
+.toast {
+    background: #fff;
+    border-radius: 8px;
+    padding: 14px 18px;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-width: 300px;
+    max-width: 400px;
+    pointer-events: auto;
+    animation: slideInRight 0.3s ease-out;
+    border-left: 4px solid var(--accent);
+}
+
+.toast-success {
+    border-left-color: var(--success);
+}
+
+.toast-error {
+    border-left-color: #ef4444;
+}
+
+.toast-warning {
+    border-left-color: var(--warning);
+}
+
+.toast-message {
+    flex: 1;
+    font-size: 14px;
+    color: #222;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-base);
+}
+
+.toast-close:hover {
+    color: #222;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* =======================
+   Search Suggestions
+======================= */
+.search-suggestions {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 200;
+}
+
+.suggestions-section {
+    padding: 8px 0;
+}
+
+.suggestions-header {
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.suggestion-item {
+    width: 100%;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #222;
+    font-size: 14px;
+    transition: background var(--transition-base);
+}
+
+.suggestion-item:hover {
+    background: var(--accent-subtle);
+}
+
+.suggestion-item svg {
+    color: var(--muted);
+    flex-shrink: 0;
+}
+
+/* =======================
+   Sort Dropdown
+======================= */
+.sort-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sort-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+/* =======================
+   Filter Chips
+======================= */
+.filter-chips {
+    margin-bottom: 20px;
+    padding: 16px;
+    background: var(--accent-subtle);
+    border-radius: 12px;
+}
+
+.filter-chips-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-dark);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-chips-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: #fff;
+    border: 1px solid var(--accent-light);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--accent-dark);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.filter-chip:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+.filter-chip svg {
+    width: 14px;
+    height: 14px;
+}
+
+.filter-chip-clear {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    font-weight: 600;
+}
+
+.filter-chip-clear:hover {
+    background: var(--accent-dark);
+}
+
+/* =======================
+   Share Button
+======================= */
+.share-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--accent-subtle);
+    border: 1px solid var(--accent-light);
+    border-radius: 8px;
+    color: var(--accent-dark);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.share-button:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+.share-button svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* =======================
+   Similar Restaurants
+======================= */
+.similar-restaurants {
+    margin-top: 48px;
+    padding-top: 48px;
+    border-top: 1px solid #eee;
+}
+
+.similar-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.similar-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.similar-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.similar-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-light);
+}
+
+.similar-image {
+    width: 100%;
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+    background-color: #f3f4f6;
+}
+
+.similar-info {
+    padding: 12px;
+}
+
+.similar-name {
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.similar-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.similar-price {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+/* =======================
+   Restaurant Details
+======================= */
+.restaurant-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 16px;
+}
+
+.review-count {
+    color: var(--muted);
+    font-size: 14px;
+    margin-left: 8px;
+}
+
+.reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.reviews-header h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.empty-reviews {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--accent-subtle);
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.empty-reviews p {
+    color: var(--muted);
+    margin-bottom: 16px;
 }

@@ -2,7 +2,32 @@
     --accent: #3b6b74;
     /* muted teal/gray */
     --accent-dark: #2f5b61;
+    --accent-light: #4a7d87;
+    --accent-subtle: rgba(59, 107, 116, 0.08);
     --muted: #6b7280;
+    --muted-light: #9ca3af;
     --card-bg: #ffffff;
     --overlay: rgba(255, 255, 255, 0.72);
+    
+    /* Complementary colors for depth */
+    --warm-accent: #d97757;
+    --warm-accent-light: rgba(217, 119, 87, 0.1);
+    --success: #10b981;
+    --warning: #f59e0b;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #3b6b74 0%, #2f5b61 100%);
+    --gradient-hero: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%);
+    --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 1) 100%);
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(38, 50, 56, 0.06);
+    --shadow-md: 0 6px 18px rgba(38, 50, 56, 0.08);
+    --shadow-lg: 0 12px 30px rgba(38, 50, 56, 0.12);
+    --shadow-hover: 0 16px 40px rgba(38, 50, 56, 0.15);
+    
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.2s ease;
+    --transition-slow: 0.3s ease;
 }

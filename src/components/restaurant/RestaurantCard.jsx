@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import StarRating from "../common/StarRating";
 import RestaurantsContext from "../../context/RestaurantsContext";
-
+import Placeholder from "../../assets/addis-cafe.jpg";
 
 function RestaurantCard({ restaurant }) {
   const { toggleFavorite, isFavorite } = useContext(RestaurantsContext);

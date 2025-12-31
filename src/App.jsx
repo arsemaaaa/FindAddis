@@ -19,40 +19,48 @@ import NotFound from "./pages/NotFound";
 
 import { RestaurantsProvider } from "./context/RestaurantsContext";
 import { AuthProvider } from "./context/AuthContext";
+import { ToastProvider } from "./context/ToastContext";
+import ToastContainer from "./components/common/ToastContainer";
+import { useToastContext } from "./context/ToastContext";
 import "./styles/main.css";
 
+function AppContent() {
+  const { toasts, removeToast } = useToastContext();
 
+  return (
+    <div className="app-root">
+      <Navbar />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/restaurants" element={<RestaurantListPage />} />
+          <Route path="/restaurants/:id" element={<RestaurantDetailsPage />} />
+          <Route path="/search" element={<SearchResultsPage />} />
+          <Route path="/write-review" element={<WriteReviewPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/profile" element={<UserProfilePage />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
 
-
-
-
+      <Footer />
+      <ToastContainer toasts={toasts} removeToast={removeToast} />
+    </div>
+  );
+}
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <RestaurantsProvider>
-          <div className="app-root">
-            <Navbar />
-            <main>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/restaurants" element={<RestaurantListPage />} />
-                <Route path="/restaurants/:id" element={<RestaurantDetailsPage />} />
-                <Route path="/search" element={<SearchResultsPage />} />
-                <Route path="/write-review" element={<WriteReviewPage />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/profile" element={<UserProfilePage />} />
-                <Route path="/favorites" element={<Favorites />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/about" element={<About />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-
-            <Footer />
-          </div>
+          <ToastProvider>
+            <AppContent />
+          </ToastProvider>
         </RestaurantsProvider>
       </AuthProvider>
     </BrowserRouter>

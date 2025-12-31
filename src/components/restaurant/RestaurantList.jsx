@@ -1,9 +1,22 @@
 import React from "react";
 import RestaurantCard from "./RestaurantCard";
+import EmptyState from "../common/EmptyState";
 
 function RestaurantList({ restaurants }) {
   if (!restaurants || restaurants.length === 0) {
-    return <div className="empty-list">No restaurants found.</div>;
+    return (
+      <EmptyState
+        title="No restaurants found"
+        message="Try adjusting your filters or search terms."
+        suggestions={[
+          "Clear your filters to see more results",
+          "Try a different category or search term",
+          "Check back later for new restaurants"
+        ]}
+        actionLabel="View all restaurants"
+        actionLink="/restaurants"
+      />
+    );
   }
 
   return (
