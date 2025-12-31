@@ -8,10 +8,39 @@
     font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+p {
+    line-height: 1.7;
+}
+
 body {
     background-color: #fafafa;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(59, 107, 116, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(217, 119, 87, 0.02) 0%, transparent 50%);
+    background-attachment: fixed;
     color: #222;
-    line-height: 1.5;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* ensure the background covers full viewport behind content */
