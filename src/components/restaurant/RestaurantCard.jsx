@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import StarRating from "../common/StarRating";
 import RestaurantsContext from "../../context/RestaurantsContext";
+import Placeholder from "../../assets/addis-cafe.jpg";
 
 
 function RestaurantCard({ restaurant }) {
@@ -20,9 +21,8 @@ function RestaurantCard({ restaurant }) {
           <img
             src={imgSrc}
             alt={`${restaurant.name} photo`}
-            className={`restaurant-image-img ${
-              imgSrc === Placeholder ? "placeholder" : ""
-            }`}
+            className={`restaurant-image-img ${imgSrc === Placeholder ? "placeholder" : ""
+              }`}
             loading="lazy"
           />
         </Link>

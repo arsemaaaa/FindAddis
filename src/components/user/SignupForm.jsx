@@ -16,12 +16,12 @@ function SignupForm({ onSignup }) {
 
   return (
     <form className="signup-form" onSubmit={handleSubmit}>
-      <InputField name="name" label="Name" value={form.name} onChange={handleChange} placeholder="Your name" />
-      <InputField name="email" label="Email" value={form.email} onChange={handleChange} placeholder="you@example.com" />
-      <InputField name="password" label="Password" type="password" value={form.password} onChange={handleChange} placeholder="Choose a password" />
-      <div className="form-row">
-        <label className="input-label">Role</label>
-        <select name="role" value={form.role} onChange={handleChange} className="input-field">
+      <InputField name="name" label="Name" value={form.name} onChange={handleChange} placeholder="Your name" className="mb-3" />
+      <InputField name="email" label="Email" value={form.email} onChange={handleChange} placeholder="you@example.com" className="mb-3" />
+      <InputField name="password" label="Password" type="password" value={form.password} onChange={handleChange} placeholder="Choose a password" className="mb-3" />
+      <div className="form-row mb-3">
+        <label className="input-label form-label">Role</label>
+        <select name="role" value={form.role} onChange={handleChange} className="form-select">
           <option value="user">User</option>
           <option value="admin">Admin</option>
         </select>

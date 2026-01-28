@@ -8,9 +8,13 @@ function Signup() {
   const { signup } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  function handleSignup(details) {
-    signup(details);
-    navigate("/");
+  async function handleSignup(details) {
+    try {
+      await signup(details);
+      navigate("/");
+    } catch (e) {
+      alert(e);
+    }
   }
 
   return (

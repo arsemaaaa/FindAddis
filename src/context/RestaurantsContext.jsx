@@ -1,17 +1,28 @@
 import React from "react";
+import axios from "axios";
 import SAMPLE_RESTAURANTS from "../data/restaurants";
 
 const RestaurantsContext = React.createContext();
 
 export function RestaurantsProvider({ children }) {
-  const [restaurants, setRestaurants] = React.useState(() => {
-    try {
-      const raw = localStorage.getItem("fa_restaurants_v1");
-      return raw ? JSON.parse(raw) : SAMPLE_RESTAURANTS;
-    } catch (e) {
-      return SAMPLE_RESTAURANTS;
-    }
-  });
+  const [restaurants, setRestaurants] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get("http://localhost:5000/api/restaurants")
+      .then((res) => {
+        if (res.data.length === 0) {
+          // Fallback or handle initial seed
+          setRestaurants([]);
+        } else {
+          setRestaurants(res.data);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to fetch restaurants", err);
+        // Fallback to sample data if backend fails, for smoother demo
+        setRestaurants(SAMPLE_RESTAURANTS);
+      });
+  }, []);
 
   const [favorites, setFavorites] = React.useState(() => {
     try {
@@ -24,36 +35,45 @@ export function RestaurantsProvider({ children }) {
 
   React.useEffect(() => {
     try {
-      localStorage.setItem("fa_restaurants_v1", JSON.stringify(restaurants));
-    } catch (e) { }
-  }, [restaurants]);
-
-  React.useEffect(() => {
-    try {
       localStorage.setItem("fa_favorites", JSON.stringify(favorites));
     } catch (e) { }
   }, [favorites]);
 
   function addReview(restaurantId, review) {
-    setRestaurants((prev) =>
-      prev.map((r) => (r.id === restaurantId ? { ...r, reviews: [...(r.reviews || []), review] } : r))
-    );
+    return axios.post(`http://localhost:5000/api/restaurants/${restaurantId}/reviews`, review)
+      .then((res) => {
+        // Optimistically update or re-fetch. Let's update state manually to save a fetch.
+        // res.data contains the new review with ID
+        const newReview = res.data;
+        setRestaurants((prev) =>
+          prev.map((r) => (r.id === restaurantId ? { ...r, reviews: [...(r.reviews || []), newReview] } : r))
+        );
+      })
+      .catch((err) => console.error("Error adding review", err));
   }
 
   function editReview(restaurantId, reviewId, updated) {
-    setRestaurants((prev) =>
-      prev.map((r) =>
-        r.id === restaurantId
-          ? { ...r, reviews: (r.reviews || []).map((rv) => (rv.id === reviewId ? { ...rv, ...updated } : rv)) }
-          : r
-      )
-    );
+    axios.put(`http://localhost:5000/api/restaurants/${restaurantId}/reviews/${reviewId}`, updated)
+      .then((res) => {
+        setRestaurants((prev) =>
+          prev.map((r) =>
+            r.id === restaurantId
+              ? { ...r, reviews: (r.reviews || []).map((rv) => (rv.id === reviewId || rv._id === reviewId ? { ...rv, ...updated } : rv)) }
+              : r
+          )
+        );
+      })
+      .catch((err) => console.error("Error editing review", err));
   }
 
   function deleteReview(restaurantId, reviewId) {
-    setRestaurants((prev) =>
-      prev.map((r) => (r.id === restaurantId ? { ...r, reviews: (r.reviews || []).filter((rv) => rv.id !== reviewId) } : r))
-    );
+    axios.delete(`http://localhost:5000/api/restaurants/${restaurantId}/reviews/${reviewId}`)
+      .then(() => {
+        setRestaurants((prev) =>
+          prev.map((r) => (r.id === restaurantId ? { ...r, reviews: (r.reviews || []).filter((rv) => rv.id !== reviewId && rv._id !== reviewId) } : r))
+        );
+      })
+      .catch((err) => console.error("Error deleting review", err));
   }
 
   function addRestaurant(newR) {

@@ -9,8 +9,12 @@ function Login() {
   const navigate = useNavigate();
 
   async function handleLogin(credentials) {
-    login(credentials);
-    navigate("/");
+    try {
+      await login(credentials);
+      navigate("/");
+    } catch (e) {
+      alert(e);
+    }
   }
 
   return (
