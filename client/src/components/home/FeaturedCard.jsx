@@ -1,7 +1,6 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import RestaurantsContext from "../../context/RestaurantsContext";
 import StarRating from "../common/StarRating";
 import LucyImg from '../../assets/lucy.jpg';
@@ -14,11 +13,11 @@ import Placeholder from "../../assets/addis-cafe.jpg";
 
 function FeaturedCard({ restaurant }) {
 
-  const { toggleFavorite, isFavorite, updateRestaurantImage } = useContext(RestaurantsContext);
+  const { toggleFavorite, isFavorite } = useContext(RestaurantsContext);
   const fav = isFavorite ? isFavorite(restaurant._id) : false;
 
-  const inputRef = useRef(null);
-  const [uploading, setUploading] = useState(false);
+  // const inputRef = useRef(null);
+  // const [uploading, setUploading] = useState(false);
 
   // Default images for known restaurants
   const defaults = {

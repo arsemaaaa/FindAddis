@@ -11,6 +11,7 @@ export function AuthProvider({ children }) {
       const raw = localStorage.getItem("fa_user");
       return raw ? JSON.parse(raw) : null;
     } catch (e) {
+      console.log(e)
       return null;
     }
   });
@@ -19,6 +20,7 @@ export function AuthProvider({ children }) {
     try {
       return localStorage.getItem("fa_token");
     } catch (e) {
+      console.log(e)
       return null;
     }
   });

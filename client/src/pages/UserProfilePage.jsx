@@ -13,6 +13,11 @@ function UserProfilePage() {
   const [formData, setFormData] = React.useState({ name: '', description: '', menu: '' });
   const [msg, setMsg] = React.useState(null);
 
+  function fetchRequests() {
+    axios.get('http://localhost:3000/api/requests')
+      .then(res => setRequests(res.data))
+      .catch(err => console.error("Failed to fetch requests", err));
+  }
   // Admin: Fetch pending requests
   React.useEffect(() => {
     if (isAdmin()) {
@@ -20,11 +25,7 @@ function UserProfilePage() {
     }
   }, [user]);
 
-  function fetchRequests() {
-    axios.get('http://localhost:3000/api/requests')
-      .then(res => setRequests(res.data))
-      .catch(err => console.error("Failed to fetch requests", err));
-  }
+
 
   function handleApprove(id) {
     axios.post(`http://localhost:3000/api/requests/${id}/approve`)

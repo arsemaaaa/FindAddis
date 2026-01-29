@@ -31,6 +31,7 @@ export function RestaurantsProvider({ children }) {
       const raw = localStorage.getItem("fa_favorites");
       return raw ? JSON.parse(raw) : [];
     } catch (e) {
+      console.log(e)
       return [];
     }
   });
@@ -59,6 +60,7 @@ export function RestaurantsProvider({ children }) {
   function editReview(restaurantId, reviewId, updated) {
     axios.put(`http://localhost:3000/api/restaurants/${restaurantId}/reviews/${reviewId}`, updated)
       .then((res) => {
+        console.log(res)
         setRestaurants((prev) =>
           prev.map((r) =>
             r.id === restaurantId
