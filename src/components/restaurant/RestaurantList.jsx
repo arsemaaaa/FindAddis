@@ -8,9 +8,13 @@ function RestaurantList({ restaurants }) {
 
   return (
     <div className="restaurant-list">
-      {restaurants.map((r) => (
-        <RestaurantCard key={r.id} restaurant={r} />
-      ))}
+      <div className="row">
+        {restaurants.map((r) => (
+          <div key={r.id} className="col-12 col-md-6 col-lg-4 mb-4">
+            <RestaurantCard restaurant={r} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
