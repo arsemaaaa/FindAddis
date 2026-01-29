@@ -13,21 +13,38 @@
 .button-primary {
     background-color: var(--accent);
     color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .button-primary:hover {
     background-color: var(--accent-dark);
+    box-shadow: 0 4px 12px rgba(59, 107, 116, 0.2);
+    transform: translateY(-1px);
 }
 
-.button-disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+.button-outline {
+    background: transparent;
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+}
+
+.button-outline:hover {
+    background: rgba(59, 107, 116, 0.05);
 }
 
 .button-ghost {
     background: transparent;
     border: 1px solid #ddd;
-    color: white;
+    color: #555;
+}
+
+.button-ghost:hover {
+    background: #f9f9f9;
+}
+
+.button-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .button-small {

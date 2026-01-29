@@ -15,7 +15,7 @@ function LoginForm({ onLogin }) {
   }
 
   return (
-    <form className="login-form" onSubmit={handleSubmit}>
+    <form className="login-form" onSubmit={handleSubmit} style={{ display: 'grid', gap: '1rem' }}>
       <InputField name="email" label="Email" value={form.email} onChange={handleChange} placeholder="you@example.com" />
       <InputField name="password" label="Password" type="password" value={form.password} onChange={handleChange} placeholder="••••••" />
       <div className="form-row" style={{ display: 'none' }}>

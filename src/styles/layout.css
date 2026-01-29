@@ -160,26 +160,33 @@
 
 .auth-login {
     font-weight: 700;
-    color: #555;
+    color: #333;
     padding: 8px 16px;
-    border-radius: 4px;
+    border-radius: 8px;
     text-decoration: none;
     font-size: 14px;
-    transition: background 0.1s;
+    transition: all 0.2s;
+    border: 1px solid transparent;
 }
 
 .auth-login:hover {
-    background: rgba(0, 0, 0, 0.05);
+    color: var(--accent);
+    background: rgba(59, 107, 116, 0.05); /* very light teal */
 }
 
 .auth-signup {
-    /* Primary button style overlay */
-    padding: 8px 16px;
-    border-radius: 4px;
+    padding: 8px 18px;
+    border-radius: 8px; /* matching theme radius */
     font-size: 14px;
     font-weight: 700;
     text-decoration: none;
     display: inline-block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.auth-signup:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
 }
 
 /* =======================

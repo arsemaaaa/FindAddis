@@ -19,13 +19,22 @@ import NotFound from "./pages/NotFound";
 
 import { RestaurantsProvider } from "./context/RestaurantsContext";
 import { AuthProvider } from "./context/AuthContext";
+import AuthContext from "./context/AuthContext";
+import { useContext } from "react";
+import { Navigate } from "react-router-dom";
 import "./styles/main.css";
 
+// Helper component to restrict Admins/Vendors to their dashboard
+function RoleBasedRoute({ children }) {
+  const { user, isAdmin, isOwner } = useContext(AuthContext);
 
+  // If logged in as Admin or Vendor, the standard pages are restricted
+  if (user && (isAdmin() || isOwner())) {
+    return <Navigate to="/profile" replace />;
+  }
 
-
-
-
+  return children;
+}
 
 function App() {
   return (
@@ -36,15 +45,15 @@ function App() {
             <Navbar />
             <main>
               <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/restaurants" element={<RestaurantListPage />} />
-                <Route path="/restaurants/:id" element={<RestaurantDetailsPage />} />
-                <Route path="/search" element={<SearchResultsPage />} />
-                <Route path="/write-review" element={<WriteReviewPage />} />
+                <Route path="/" element={<RoleBasedRoute><Home /></RoleBasedRoute>} />
+                <Route path="/restaurants" element={<RoleBasedRoute><RestaurantListPage /></RoleBasedRoute>} />
+                <Route path="/restaurants/:id" element={<RoleBasedRoute><RestaurantDetailsPage /></RoleBasedRoute>} />
+                <Route path="/search" element={<RoleBasedRoute><SearchResultsPage /></RoleBasedRoute>} />
+                <Route path="/write-review" element={<RoleBasedRoute><WriteReviewPage /></RoleBasedRoute>} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/profile" element={<UserProfilePage />} />
-                <Route path="/favorites" element={<Favorites />} />
+                <Route path="/favorites" element={<RoleBasedRoute><Favorites /></RoleBasedRoute>} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/about" element={<About />} />
                 <Route path="*" element={<NotFound />} />

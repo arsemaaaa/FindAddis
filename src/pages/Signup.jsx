@@ -12,8 +12,13 @@ function Signup() {
   async function handleSignup(details) {
     setError(null);
     try {
-      await signup(details);
-      navigate("/");
+      const userData = await signup(details);
+      // Redirect Admins and Vendors directly to their dashboard
+      if (userData.role === 'admin' || userData.role === 'restaurant_owner') {
+        navigate("/profile");
+      } else {
+        navigate("/");
+      }
     } catch (e) {
       setError(e);
     }
