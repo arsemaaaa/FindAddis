@@ -3,7 +3,7 @@ import InputField from "../common/InputField";
 import Button from "../common/Button";
 
 function SignupForm({ onSignup }) {
-  const [form, setForm] = React.useState({ name: "", email: "", password: "", role: "user" });
+  const [form, setForm] = React.useState({ name: "", email: "", password: "", role: "user", adminSecret: "" });
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -11,6 +11,14 @@ function SignupForm({ onSignup }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    // Frontend Email Validation
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!emailRegex.test(form.email)) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
     if (onSignup) onSignup(form);
   }
 
@@ -24,8 +32,21 @@ function SignupForm({ onSignup }) {
         <select name="role" value={form.role} onChange={handleChange} className="input-field">
           <option value="user">User</option>
           <option value="admin">Admin</option>
+          <option value="restaurant_owner">Restaurant Owner (Vendor)</option>
         </select>
       </div>
+
+      {(form.role === "admin" || form.role === "restaurant_owner") && (
+        <InputField
+          name="adminSecret"
+          label={form.role === "admin" ? "Admin Secret Code" : "Vendor Secret Code"}
+          type="password"
+          value={form.adminSecret}
+          onChange={handleChange}
+          placeholder={form.role === "admin" ? "Enter admin secret key" : "Enter vendor secret key"}
+        />
+      )}
+
       <Button type="submit">Create account</Button>
     </form>
   );

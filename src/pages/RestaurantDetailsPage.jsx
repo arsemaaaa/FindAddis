@@ -5,6 +5,7 @@ import { useContext } from "react";
 import MenuSection from "../components/restaurant/MenuSection";
 import ReviewCard from "../components/restaurant/Reviewcard";
 import StarRating from "../components/common/StarRating";
+import MapSection from "../components/common/MapSection";
 
 
 
@@ -32,6 +33,9 @@ function RestaurantDetailsPage() {
           <p className="restaurant-description">{r.description}</p>
 
           <MenuSection menu={r.menu} />
+
+          <MapSection location={r.location} name={r.name} />
+
 
           <section className="reviews-section">
             <h3>Reviews</h3>

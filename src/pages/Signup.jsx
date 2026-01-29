@@ -7,15 +7,22 @@ import { useNavigate } from "react-router-dom";
 function Signup() {
   const { signup } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [error, setError] = React.useState(null);
 
-  function handleSignup(details) {
-    signup(details);
-    navigate("/");
+  async function handleSignup(details) {
+    setError(null);
+    try {
+      await signup(details);
+      navigate("/");
+    } catch (e) {
+      setError(e);
+    }
   }
 
   return (
     <div className="signup-page container">
       <h1 className="page-title">Create an account</h1>
+      {error && <div className="alert-error" style={{ color: 'red', marginBottom: '1rem', padding: '0.5rem', background: '#ffebee', borderRadius: '4px' }}>{error}</div>}
       <SignupForm onSignup={handleSignup} />
     </div>
   );

@@ -1,10 +1,13 @@
 import React from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import InputField from "../common/InputField";
+import AuthContext from "../../context/AuthContext";
+import { useContext } from "react";
 
 
 
 function Navbar({ onSearch }) {
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [q, setQ] = React.useState("");
   const location = useLocation();
@@ -28,7 +31,7 @@ function Navbar({ onSearch }) {
           <label className="search-label">Find</label>
           <input
             className="search-input"
-            placeholder="tacos, cheap dinner, Max's"
+            placeholder="Search for restaurants, cafes..."
             value={q}
             onChange={(e) => setQ(e.target.value)}
           />
@@ -45,8 +48,18 @@ function Navbar({ onSearch }) {
         </nav>
 
         <div className="nav-auth">
-          <Link to="/login" className="nav-link auth-login">Log In</Link>
-          <Link to="/signup" className="button button-primary auth-signup">Sign Up</Link>
+          {user ? (
+            <div className="user-menu" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+              <Link to="/profile" className="nav-link user-link">
+                <span className="user-name">Hi, {user.name}</span>
+              </Link>
+            </div>
+          ) : (
+            <>
+              <Link to="/login" className="nav-link auth-login">Log In</Link>
+              <Link to="/signup" className="button button-primary auth-signup">Sign Up</Link>
+            </>
+          )}
         </div>
       </div>
     </header>

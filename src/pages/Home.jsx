@@ -25,9 +25,27 @@ function Home() {
       </section>
 
       <section className="home-section container">
-        <h2 className="section-title">Featured restaurants</h2>
+        <h2 className="section-title">Popular near you</h2>
         <div className="featured-row">
-          {restaurants.slice(0, 6).map((r) => (
+          {restaurants && restaurants.filter(r => r.category === 'Ethiopian').slice(0, 4).map((r) => (
+            <FeaturedCard key={r.id} restaurant={r} />
+          ))}
+        </div>
+      </section>
+
+      <section className="home-section container">
+        <h2 className="section-title">Top rated in Addis</h2>
+        <div className="featured-row">
+          {[...restaurants].sort((a, b) => b.rating - a.rating).slice(0, 4).map((r) => (
+            <FeaturedCard key={r.id} restaurant={r} />
+          ))}
+        </div>
+      </section>
+
+      <section className="home-section container">
+        <h2 className="section-title">Trending this week</h2>
+        <div className="featured-row">
+          {[...restaurants].sort(() => 0.5 - Math.random()).slice(0, 4).map((r) => (
             <FeaturedCard key={r.id} restaurant={r} />
           ))}
         </div>
