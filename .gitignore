@@ -26,6 +26,8 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+# Environment variables
+.env
+backend/.env
 
-#configs
-/server/.env
+# Mac system files

@@ -38,36 +38,32 @@ function Navbar({ onSearch }) {
   };
 
   return (
-    <header className="nav-container">
-      <div className="nav-left">
-        <Link to="/" className="nav-logo">Find Addis</Link>
-      </div>
+    <nav className="navbar navbar-expand-lg bg-white shadow-sm" style={{ position: "relative", zIndex: 1000 }}>
+      <div className="container">
+        <Link to="/" className="navbar-brand">Find Addis</Link>
 
-      <form className="nav-search-bar" onSubmit={submitSearch}>
-        <div className="search-group">
-          <label className="search-label">Find</label>
+        <form className="d-flex mx-auto w-50" onSubmit={submitSearch}>
           <input
-            className="search-input"
+            className="form-control me-2"
             placeholder="Search for restaurants, cafes..."
             value={q}
             onChange={(e) => setQ(e.target.value)}
           />
-        </div>
-        <button type="submit" className="search-btn" aria-label="Search">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-        </button>
-      </form>
+          <button type="submit" className="btn btn-primary" aria-label="Search">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+        </form>
 
-      <div className="nav-right">
-        <nav className="nav-actions">
-          <Link to="/favorites" className="nav-link">Favorites</Link>
-          <Link to="/restaurants" className="nav-link">Restaurants</Link>
-        </nav>
+        <div className="d-flex align-items-center">
+          <nav className="me-3">
+            <Link to="/favorites" className="nav-link d-inline">Favorites</Link>
+            <Link to="/restaurants" className="nav-link d-inline">Restaurants</Link>
+          </nav>
 
-        <div className="nav-auth" style={{ display: "flex", gap: "1rem" }}>
+          <div className="nav-auth d-flex" style={{ gap: "0.75rem" }}>
           {user ? (
             <div className="user-menu" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
               <Link to="/profile" className="nav-link user-link">
@@ -78,58 +74,64 @@ function Navbar({ onSearch }) {
             <>
               {/* LOGIN */}
               <div ref={loginRef} style={{ position: "relative", display: "inline-block" }}>
-                <Link
-                  to="#"
+                <a
+                  href="#"
                   onClick={(e) => { e.preventDefault(); toggleLogin(); }}
-                  className="nav-link auth-login"
+                  className="btn btn-link auth-login"
                 >
                   Log In
-                </Link>
+                </a>
 
                 {loginOption && (
                   <div style={{
                     position: "absolute",
                     top: "100%",
                     left: 0,
+                    marginTop: "4px",
                     background: "white",
                     boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
                     borderRadius: "5px",
                     padding: "10px",
-                    zIndex: 100,
+                    zIndex: 1001,
+                    minWidth: "120px",
                     display: "flex",
-                    flexDirection: "column"
+                    flexDirection: "column",
+                    pointerEvents: "auto"
                   }}>
-                    <Link to="/login" className="button button-primary auth-signup">User</Link>
-                    <Link to="/OwnerLoginPage" className="button button-primary auth-signup">Owner</Link>
+                    <Link to="/login" className="btn btn-outline-primary mb-2">User</Link>
+                    <Link to="/OwnerLoginPage" className="btn btn-outline-primary">Owner</Link>
                   </div>
                 )}
               </div>
 
               {/* SIGNUP */}
               <div ref={signupRef} style={{ position: "relative", display: "inline-block" }}>
-                <Link
-                  to="#"
+                <a
+                  href="#"
                   onClick={(e) => { e.preventDefault(); toggleSignup(); }}
-                  className="button button-primary auth-signup"
+                  className="btn btn-primary auth-signup"
                 >
                   Sign Up
-                </Link>
+                </a>
 
                 {signupOption && (
                   <div style={{
                     position: "absolute",
                     top: "100%",
                     left: 0,
+                    marginTop: "4px",
                     background: "white",
                     boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
                     borderRadius: "5px",
                     padding: "10px",
-                    zIndex: 100,
+                    zIndex: 1001,
+                    minWidth: "120px",
                     display: "flex",
-                    flexDirection: "column"
+                    flexDirection: "column",
+                    pointerEvents: "auto"
                   }}>
-                    <Link to="/signup" className="button button-primary auth-signup">User</Link>
-                    <Link to="/OwnerSignUp" className="button button-primary auth-signup">Owner</Link>
+                    <Link to="/signup" className="btn btn-outline-primary mb-2">User</Link>
+                    <Link to="/OwnerSignUp" className="btn btn-outline-primary">Owner</Link>
                   </div>
                 )}
               </div>
@@ -137,7 +139,8 @@ function Navbar({ onSearch }) {
           )}
         </div>
       </div>
-    </header>
+      </div>
+    </nav>
   );
 }
 
