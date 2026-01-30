@@ -8,19 +8,17 @@ export function AuthProvider({ children }) {
 
   const [user, setUser] = React.useState(() => {
     try {
-      const raw = localStorage.getItem("fa_user");
-      return raw ? JSON.parse(raw) : null;
+      const stored = localStorage.getItem("fa_user");
+      return stored ? JSON.parse(stored) : null;
     } catch (e) {
-      console.log(e)
       return null;
     }
   });
 
   const [token, setToken] = React.useState(() => {
     try {
-      return localStorage.getItem("fa_token");
+      return localStorage.getItem("fa_token") || null;
     } catch (e) {
-      console.log(e)
       return null;
     }
   });
@@ -62,7 +60,7 @@ export function AuthProvider({ children }) {
   async function ownerLogin(credentials) {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/RestaurantOwners/login",
+        "http://localhost:3000/api/owners/login",
         credentials
       );
       const decoded = jwtDecode(res.data.token);
@@ -84,23 +82,11 @@ export function AuthProvider({ children }) {
     setToken(null);
   }
 
-  async function signup(details) {
-    try {
-      const res = await axios.post("http://localhost:3000/api/users/register", details);//removed /register here
-      setUser(res.data.user);
-      setToken(res.data.token);
-      return res.data;
-    } catch (err) {
-      console.error("Signup failed", err);
-      throw err.response?.data?.message || "Signup failed";
-    }
-  }
-
   const isAdmin = () => user?.role === "admin";
   const isOwner = () => user?.role === "restaurant_owner" || !!user?.managedRestaurantId;
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, signup, isAdmin, isOwner, ownerLogin }}>
+    <AuthContext.Provider value={{ user, token, login, logout, /*signup,*/ isAdmin, isOwner, ownerLogin }}>
       {children}
     </AuthContext.Provider>
   );

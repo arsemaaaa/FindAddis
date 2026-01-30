@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
         const verificationLink = "http://localhost:3000/api/users/verify?token=" + token + "&email=" + email;
         try {
             SendEmail(process.env.EMAIL, newUser.email, 'verify findAddis account', verificationLink)
-            res.status(201).json({ message: "User registered successfully. Please verify your email using the link sent to your account" });
+            res.status(201).json({ msg: "User registered successfully. Please verify your email using the link sent to your account" });
         } catch (err) {
             res.status(500).send({ msg: 'Unable to send verification email to user' })
         }
@@ -110,34 +110,6 @@ router.post('/login', async (req, res) => {
 
 })
 
-// router.post('/login', async (req, res) => {
-//     const { email, password } = req.body;
-//     const user = await User.findOne({ email })
-//     if (!user) return res.status(404).json({ msg: 'user not found' });
-
-//     const isMatch = await bcrypt.compare(password, user.password)
-//     if (!isMatch) return res.status(400).json({ msg: 'incorrect email or password' });
-//     if (!user.isVerified) return res.status(400).json({ msg: 'please verify your email' });
-
-//     const token = jwt.sign(
-//         { id: user._id, name: user.name, email: user.email, role: "user" },
-//         process.env.JWT_SECRET,
-//         { expiresIn: process.env.EXPIRESIN }
-//     );
-
-//     res.status(200).json({
-//         user: {
-//             id: user._id,
-//             name: user.name,
-//             email: user.email,
-//             role: "user"
-//         },
-//         token,
-//         expiresIn: process.env.EXPIRESIN
-//     });
-// });
-
-
 router.post("/favorites/:restaurantId", userAuthmiddleware, async (req, res) => {
     try {
         const userId = req.user.id;
@@ -148,7 +120,7 @@ router.post("/favorites/:restaurantId", userAuthmiddleware, async (req, res) => 
             { $addToSet: { favorites: restaurantId } },
             { new: true }
         ).populate("favorites");
-
+        // returns all resturant object favotired by the the user
         res.status(200).json(user.favorites);
     } catch (err) {
         console.error(err);
@@ -157,6 +129,31 @@ router.post("/favorites/:restaurantId", userAuthmiddleware, async (req, res) => 
 });
 
 
+router.get("/favorites", userAuthmiddleware, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const user = await User.findById(userId).populate("favorites");
+        res.status(200).json(user?.favorites);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: "Server error" });
+    }
+});
 
+router.delete("/favorites/:restaurantId", userAuthmiddleware, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const restaurantId = req.params.restaurantId;
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { $pull: { favorites: restaurantId } },
+            { new: true }
+        ).populate("favorites");
+        res.status(200).json(user.favorites);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: "Server error" });
+    }
+});
 
 export default router;

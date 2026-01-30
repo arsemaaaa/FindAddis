@@ -12,7 +12,7 @@ const restaurantSchema = mongoose.Schema({
     name: { type: String, required: true },
     category: { type: String, required: true },
     rating: { type: Number, required: true, default: 0 },
-    price: { type: String, required: true },
+    price: { type: String },
     address: { type: String, required: true },
     images: [String], // will store base64 strings
     hours: String,

@@ -24,7 +24,7 @@ connectdb();
 
 app.use('/api/restaurants', restaurantRoute);
 app.use('/api/users', UserRoute);
-app.use('/api/RestaurantOwners', RestaurantOwnersRoute)
+app.use('/api/owners', RestaurantOwnersRoute)
 
 app.get('/', (req, res) => {
     res.send('server is running')

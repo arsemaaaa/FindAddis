@@ -11,6 +11,7 @@ import SearchResultsPage from "./pages/SearchResultsPage";
 import WriteReviewPage from "./pages/WriteReviewPage";
 import Login from "./pages/Login";
 import OwnerLoginPage from "./pages/OwnerLoginPage"
+import OwnerDashboard from "./pages/OwnerDashboard";
 import Signup from "./pages/Signup";
 import OwnerSignUp from "./pages/OwnerSignup";
 import UserProfilePage from "./pages/UserProfilePage";
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/OwnerSignUp" element={<OwnerSignUp />} />
+                <Route path="/OwnerDashboard" element={<OwnerDashboard />} />
                 <Route path="/OwnerLoginPage" element={<OwnerLoginPage />} />
                 <Route path="/profile" element={<UserProfilePage />} />
                 <Route path="/favorites" element={<Favorites />} />

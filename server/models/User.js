@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
     isVerified: { type: Boolean, default: false },
     token: { type: String },
     emailVerificationExpiry: { type: Date },
-    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }]
+    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "restaurants" }]
 }, { timestamps: true });
 
 const User = mongoose.model('users', userSchema);

@@ -5,7 +5,7 @@ import { useState, useContext } from "react";
 import RestaurantsContext from "../../context/RestaurantsContext";
 import AuthContext from "../../context/AuthContext";
 
-function ReviewCard({ review, restaurantId }) {
+function ReviewCard({ review, username, restaurantId }) {
   const { editReview, deleteReview } = useContext(RestaurantsContext);
   const { user, isAdmin } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
@@ -33,6 +33,7 @@ function ReviewCard({ review, restaurantId }) {
         <div className="review-user">{review.user}</div>
         <StarRating value={review.rating} />
       </div>
+      <div className="review-text"><b>{username}</b></div>
       <div className="review-text">{review.text}</div>
       <div className="review-date">{review.date}</div>
       {canEdit() && (

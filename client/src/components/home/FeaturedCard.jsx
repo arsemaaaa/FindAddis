@@ -11,13 +11,11 @@ import TomocaImg from '../../assets/tomoca.png';
 import Placeholder from "../../assets/addis-cafe.jpg";
 
 
-function FeaturedCard({ restaurant }) {
+function FeaturedCard({ restaurant, showDeleteButton }) {
 
-  const { toggleFavorite, isFavorite } = useContext(RestaurantsContext);
+  const { toggleFavorite, isFavorite, deleteRestaurant } = useContext(RestaurantsContext);
   const fav = isFavorite ? isFavorite(restaurant._id) : false;
 
-  // const inputRef = useRef(null);
-  // const [uploading, setUploading] = useState(false);
 
   // Default images for known restaurants
   const defaults = {
@@ -80,6 +78,8 @@ function FeaturedCard({ restaurant }) {
         <div className="featured-footer">
           {restaurant.address && <div className="featured-address">{restaurant.address}</div>}
           <Link to={`/restaurants/${restaurant._id}`} className="button button-small">View</Link>
+          {showDeleteButton && <button onClick={() => deleteRestaurant(restaurant._id)} className="button button-small">delete</button>}
+
         </div>
       </div>
     </article>

@@ -2,9 +2,7 @@ import React from "react";
 import Dropdown from "../common/Dropdown";
 
 function Sidebar({ filters, setFilters, restaurants }) {
-  console.log("Sidebar", restaurants)
   const uniqueCategories = [...new Set(restaurants.map(r => r.category))]
-  console.log('uniqueCategories', uniqueCategories)
   return (
     <aside className="sidebar-container">
       <div className="filter-block">

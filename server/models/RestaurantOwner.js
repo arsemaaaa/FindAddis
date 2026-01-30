@@ -10,7 +10,7 @@ const restaurantOwnerSchema = mongoose.Schema({
     isVerified: { type: Boolean, default: false },
     emailVerificationExpiry: { type: Date },
     token: { type: String },
-    restaurantsOwned: [{ type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" }]
+    restaurantsOwned: [{ type: mongoose.Schema.Types.ObjectId, ref: "restaurants" }]
 }, { timestamps: true });
 
 

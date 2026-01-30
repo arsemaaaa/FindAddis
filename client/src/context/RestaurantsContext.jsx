@@ -1,21 +1,19 @@
 import React from "react";
 import axios from "axios";
 import SAMPLE_RESTAURANTS from "../data/restaurants";
-
+import AuthContext from "./AuthContext";
 const RestaurantsContext = React.createContext();
 
 export function RestaurantsProvider({ children }) {
+  const { token } = React.useContext(AuthContext);
   const [restaurants, setRestaurants] = React.useState([]);
 
   React.useEffect(() => {
     axios.get("http://localhost:3000/api/restaurants")
       .then((res) => {
         if (res.data.length === 0) {
-          // console.log("no resturant data ... ")
-          // Fallback or handle initial seed
           setRestaurants([]);
         } else {
-          //  console.log("yes resturant data ... ", res.data)
           setRestaurants(res.data);
         }
       })
@@ -26,44 +24,62 @@ export function RestaurantsProvider({ children }) {
       });
   }, []);
 
-  const [favorites, setFavorites] = React.useState(() => {
-    try {
-      const raw = localStorage.getItem("fa_favorites");
-      return raw ? JSON.parse(raw) : [];
-    } catch (e) {
-      console.log(e)
-      return [];
-    }
-  });
+
+  const [favorites, setFavorites] = React.useState([]);
 
   React.useEffect(() => {
-    try {
-      localStorage.setItem("fa_favorites", JSON.stringify(favorites));
-    } catch (e) {
-      console.log(e)
+    if (!token) {
+      setFavorites([])
+      return
     }
-  }, [favorites]);
-
-  function addReview(restaurantId, review) {
-    return axios.post(`http://localhost:3000/api/restaurants/${restaurantId}/reviews`, review)
+    axios.get("http://localhost:3000/api/users/favorites", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
       .then((res) => {
-        // Optimistically update or re-fetch. Let's update state manually to save a fetch.
-        // res.data contains the new review with ID
-        const newReview = res.data;
-        setRestaurants((prev) =>
-          prev.map((r) => (r.id === restaurantId ? { ...r, reviews: [...(r.reviews || []), newReview] } : r))
-        );
+        if (res.data) {
+          const allUserFavorites = res.data.map(r => r._id)
+          setFavorites(allUserFavorites)
+        }
       })
-      .catch((err) => console.error("Error adding review", err));
-  }
+      .catch((err) => {
+        console.error("Failed to fetch user's favoture", err);
+      });
+  }, [token]);
 
-  function editReview(restaurantId, reviewId, updated) {
-    axios.put(`http://localhost:3000/api/restaurants/${restaurantId}/reviews/${reviewId}`, updated)
+  async function addReview(restaurantId, review) {
+    return axios.post(`http://localhost:3000/api/restaurants/${restaurantId}/reviews`, review,
+      {
+        headers: {
+          Authorization: ` Bearer ${token}`
+        }
+      }
+    )
       .then((res) => {
-        console.log(res)
+        // Server responds with { rating, reviews } — pick the newly added review
+        const data = res.data;
+        const createdReview = (data.reviews && data.reviews.length) ? data.reviews[data.reviews.length - 1] : null;
+
         setRestaurants((prev) =>
           prev.map((r) =>
-            r.id === restaurantId
+            r._id === restaurantId
+              ? { ...r, rating: data.rating ?? r.rating, reviews: [...(r.reviews || []), ...(createdReview ? [createdReview] : [])] }
+              : r
+          )
+        );
+      })
+      .catch(() => {
+        alert('you already reviewed this restaurant.')
+      });
+  }
+
+  async function editReview(restaurantId, reviewId, updated) {
+    axios.put(`http://localhost:3000/api/restaurants/${restaurantId}/reviews/${reviewId}`, updated)
+      .then((res) => {
+        setRestaurants((prev) =>
+          prev.map((r) =>
+            r._id === restaurantId
               ? { ...r, reviews: (r.reviews || []).map((rv) => (rv.id === reviewId || rv._id === reviewId ? { ...rv, ...updated } : rv)) }
               : r
           )
@@ -72,28 +88,74 @@ export function RestaurantsProvider({ children }) {
       .catch((err) => console.error("Error editing review", err));
   }
 
-  function deleteReview(restaurantId, reviewId) {
+  async function deleteReview(restaurantId, reviewId) {
     axios.delete(`http://localhost:3000/api/restaurants/${restaurantId}/reviews/${reviewId}`)
       .then(() => {
         setRestaurants((prev) =>
-          prev.map((r) => (r.id === restaurantId ? { ...r, reviews: (r.reviews || []).filter((rv) => rv.id !== reviewId && rv._id !== reviewId) } : r))
+          prev.map((r) => (r._id === restaurantId ? { ...r, reviews: (r.reviews || []).filter((rv) => rv.id !== reviewId && rv._id !== reviewId) } : r))
         );
       })
       .catch((err) => console.error("Error deleting review", err));
   }
 
   function addRestaurant(newR) {
+    // add to localstate
     setRestaurants((prev) => [newR, ...prev]);
+  }
+
+  async function deleteRestaurant(restaurantId) {
+    // remove from DB
+    axios.delete(`http://localhost:3000/api/restaurants/${restaurantId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(() => {
+        // remove from local state
+        setRestaurants((prev) => prev.filter(r => r._id != restaurantId));
+        alert('Your restaurant is removed from our system')
+      })
+      .catch((err) => console.error("Error deleting review", err));
   }
 
   function updateRestaurantImage(restaurantId, dataUrl) {
     setRestaurants((prev) =>
-      prev.map((r) => (r.id === restaurantId ? { ...r, images: [dataUrl, ...(r.images || []).slice(1)] } : r))
+      prev.map((r) => (r._id === restaurantId ? { ...r, images: [dataUrl, ...(r.images || []).slice(1)] } : r))
     );
   }
 
   function toggleFavorite(restaurantId) {
+    // decide if to add to favorite or remove. 
+    const isFavoriteToAdd = !favorites.includes(restaurantId)
+    // maintain local state
     setFavorites((prev) => (prev.includes(restaurantId) ? prev.filter((id) => id !== restaurantId) : [...prev, restaurantId]));
+
+    // add or remove user favorite list from db by calling rest api. 
+    if (isFavoriteToAdd) {
+      return axios.post(`http://localhost:3000/api/users/favorites/${restaurantId}`,
+        null, // no payload needed
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          // just added to db, not need to use the response.
+        })
+        .catch((err) => console.error("Error adding user's favorite", err));
+    } else {
+      return axios.delete(`http://localhost:3000/api/users/favorites/${restaurantId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          // just deleted to db, not need to use the response.
+        })
+        .catch((err) => console.error("Error removing user's favorite", err));
+    }
+
   }
 
   function isFavorite(restaurantId) {
@@ -108,6 +170,7 @@ export function RestaurantsProvider({ children }) {
         editReview,
         deleteReview,
         addRestaurant,
+        deleteRestaurant,
         updateRestaurantImage,
         favorites,
         toggleFavorite,
