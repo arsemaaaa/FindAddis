@@ -77,6 +77,7 @@ export function RestaurantsProvider({ children }) {
   async function editReview(restaurantId, reviewId, updated) {
     axios.put(`http://localhost:3000/api/restaurants/${restaurantId}/reviews/${reviewId}`, updated)
       .then((res) => {
+        console.log(res)
         setRestaurants((prev) =>
           prev.map((r) =>
             r._id === restaurantId
@@ -140,6 +141,7 @@ export function RestaurantsProvider({ children }) {
           },
         })
         .then((res) => {
+          console.log(res)
           // just added to db, not need to use the response.
         })
         .catch((err) => console.error("Error adding user's favorite", err));
@@ -151,6 +153,7 @@ export function RestaurantsProvider({ children }) {
           },
         })
         .then((res) => {
+          console.log(res)
           // just deleted to db, not need to use the response.
         })
         .catch((err) => console.error("Error removing user's favorite", err));
