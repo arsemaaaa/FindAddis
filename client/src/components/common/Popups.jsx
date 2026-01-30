@@ -18,14 +18,12 @@ function PopupButton() {
 
     return (
         <div ref={containerRef} style={{ display: "inline-block", position: "relative" }}>
-            <Link className="nav-link auth-login" onClick={() => setOpen(!open)}>Sign up</Link>
+            <a className="btn btn-link" href="#" onClick={(e) => { e.preventDefault(); setOpen(!open); }}>Sign up</a>
 
             {open && (
-                <div
-
-                >
-                    <Link style={{ display: "block", margin: "5px 0" }}>User</Link>
-                    <Link style={{ display: "block", margin: "5px 0" }}>Owner</Link>
+                <div style={{ position: 'absolute', top: '100%', left: 0, background: '#fff', padding: '8px', borderRadius: 6, boxShadow: '0 4px 8px rgba(0,0,0,0.12)'}}>
+                    <Link to="/signup" className="d-block mb-2">User</Link>
+                    <Link to="/OwnerSignUp" className="d-block">Owner</Link>
                 </div>
             )}
         </div>
