@@ -26,6 +26,5 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
-
-#configs
-/server/.env
+# Environment variables
+.env
