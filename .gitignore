@@ -28,3 +28,6 @@ lerna-debug.log*
 *.sw?
 # Environment variables
 .env
+backend/.env
+
+# Mac system files
