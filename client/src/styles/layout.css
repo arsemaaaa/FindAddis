@@ -8,6 +8,11 @@
 }
 
 /* Navbar: using Bootstrap now. Keep a minimal override for brand to match project colors */
+.navbar {
+    position: relative;
+    z-index: 1000;
+}
+
 .navbar-brand {
     font-weight: 800;
     color: var(--accent) !important;

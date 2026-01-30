@@ -38,7 +38,7 @@ function Navbar({ onSearch }) {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg bg-white shadow-sm">
+    <nav className="navbar navbar-expand-lg bg-white shadow-sm" style={{ position: "relative", zIndex: 1000 }}>
       <div className="container">
         <Link to="/" className="navbar-brand">Find Addis</Link>
 
@@ -87,13 +87,16 @@ function Navbar({ onSearch }) {
                     position: "absolute",
                     top: "100%",
                     left: 0,
+                    marginTop: "4px",
                     background: "white",
                     boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
                     borderRadius: "5px",
                     padding: "10px",
-                    zIndex: 100,
+                    zIndex: 1001,
+                    minWidth: "120px",
                     display: "flex",
-                    flexDirection: "column"
+                    flexDirection: "column",
+                    pointerEvents: "auto"
                   }}>
                     <Link to="/login" className="btn btn-outline-primary mb-2">User</Link>
                     <Link to="/OwnerLoginPage" className="btn btn-outline-primary">Owner</Link>
@@ -116,13 +119,16 @@ function Navbar({ onSearch }) {
                     position: "absolute",
                     top: "100%",
                     left: 0,
+                    marginTop: "4px",
                     background: "white",
                     boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
                     borderRadius: "5px",
                     padding: "10px",
-                    zIndex: 100,
+                    zIndex: 1001,
+                    minWidth: "120px",
                     display: "flex",
-                    flexDirection: "column"
+                    flexDirection: "column",
+                    pointerEvents: "auto"
                   }}>
                     <Link to="/signup" className="btn btn-outline-primary mb-2">User</Link>
                     <Link to="/OwnerSignUp" className="btn btn-outline-primary">Owner</Link>
