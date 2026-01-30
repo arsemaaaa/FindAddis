@@ -41,7 +41,6 @@ function Navbar({ onSearch }) {
     <nav className="navbar navbar-expand-lg bg-white shadow-sm" style={{ position: "relative", zIndex: 1000 }}>
       <div className="container">
         <Link to="/" className="navbar-brand">Find Addis</Link>
-
         <form className="d-flex mx-auto w-50" onSubmit={submitSearch}>
           <input
             className="form-control me-2"
@@ -59,7 +58,7 @@ function Navbar({ onSearch }) {
 
         <div className="d-flex align-items-center">
           <nav className="me-3">
-            <Link to="/favorites" className="nav-link d-inline">Favorites</Link>
+            <Link to="/favorites" className="nav-link d-inline">Favorites </Link>
             <Link to="/restaurants" className="nav-link d-inline">Restaurants</Link>
           </nav>
 
