@@ -37,17 +37,19 @@ function RestaurantDetailsPage() {
 
           <MapSection location={r.location} name={r.name} />
 
+          {user.role == 'user'
+            && (<section className="reviews-section">
+              <h3>Reviews</h3>
+              {r.reviews && r.reviews.length === 0 && <div>No reviews yet—be the first.</div>}
+              <div className="reviews-list">
+                {r.reviews.map((rev) => <ReviewCard key={rev.id} review={rev} username={user.name} restaurantId={r._id} />)}
+              </div>
+              <div className="write-review-actions">
+                <button className="button button-primary" onClick={() => navigate(`/write-review?restaurant=${r._id}`)}>Write a review</button>
+              </div>
+            </section>)
+          }
 
-          <section className="reviews-section">
-            <h3>Reviews</h3>
-            {r.reviews && r.reviews.length === 0 && <div>No reviews yet—be the first.</div>}
-            <div className="reviews-list">
-              {r.reviews.map((rev) => <ReviewCard key={rev.id} review={rev} username={user.name} restaurantId={r._id} />)}
-            </div>
-            <div className="write-review-actions">
-              <button className="button button-primary" onClick={() => navigate(`/write-review?restaurant=${r._id}`)}>Write a review</button>
-            </div>
-          </section>
         </div>
 
         <aside className="details-aside">

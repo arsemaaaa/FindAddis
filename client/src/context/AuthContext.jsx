@@ -88,7 +88,7 @@ export function AuthProvider({ children }) {
   const isOwner = () => user?.role === "restaurant_owner" || !!user?.managedRestaurantId;
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, /*signup,*/ isAdmin, isOwner, ownerLogin }}>
+    <AuthContext.Provider value={{ user, token, login, logout, isAdmin, isOwner, ownerLogin }}>
       {children}
     </AuthContext.Provider>
   );

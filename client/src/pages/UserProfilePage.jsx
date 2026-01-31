@@ -74,7 +74,7 @@ function UserProfilePage() {
         {
           user.role === "owner" &&
           <div>
-            <Button onClick={() => navigate("/OwnerDashBoard")}>Go to your dashboard</Button>
+            <Button onClick={() => navigate("/OwnerDashboard")}>Go to your dashboard</Button>
           </div>
         }
         <button className="button button-outline" onClick={logout}>Log Out</button>

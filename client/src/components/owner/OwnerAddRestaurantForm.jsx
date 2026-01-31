@@ -6,11 +6,13 @@ import AuthContext from "../../context/AuthContext";
 import axios from "axios";
 import RestaurantsContext from "../../context/RestaurantsContext";
 
-function OwnerRestaurantRegistrationForm() {
-    const [form, setForm] = useState({ name: "", category: "", address: "", hours: "", description: "", menu: "" });
+function OwnerRestaurantRegistrationForm({ onSuccess }) {
+    const initialForm = { name: "", category: "", address: "", hours: "", description: "", menu: "", latitude: "", longitude: "" };
+    const [form, setForm] = useState(initialForm);
     const [imageDataUrl, setImageDataUrl] = useState(""); // full data URL with prefix
     const [imagePreview, setImagePreview] = useState(null);
     const { token } = useContext(AuthContext);
+    const { addRestaurant } = useContext(RestaurantsContext);
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -43,6 +45,7 @@ function OwnerRestaurantRegistrationForm() {
         reader.readAsDataURL(file);
     };
 
+
     async function handleSubmit(e) {
         e.preventDefault();
         try {
@@ -53,6 +56,10 @@ function OwnerRestaurantRegistrationForm() {
                 hours: form.hours,
                 description: form.description,
                 menu: form.menu ? form.menu.split(",").map(item => item.trim()) : [],
+                location: {
+                    lat: form.latitude,
+                    lng: form.longitude
+                },
                 images: imageDataUrl ? [imageDataUrl] : [] // send as an array with full data URL prefix
             };
 
@@ -65,9 +72,18 @@ function OwnerRestaurantRegistrationForm() {
                 });
 
             if (res.status >= 200 && res.status < 300) {
+                const created = res.data;
                 alert("Restaurant created successfully!");
+
+                // notify parent (OwnerDashboard) if provided, otherwise add to global context
+                if (typeof onSuccess === 'function') {
+                    onSuccess(created);
+                } else if (typeof addRestaurant === 'function') {
+                    addRestaurant(created);
+                }
+
                 // reset form
-                setForm({ name: "", category: "", address: "", hours: "", description: "", menu: "", price: "" });
+                setForm(initialForm);
                 setImageDataUrl("");
                 setImagePreview(null);
             } else {
@@ -87,7 +103,8 @@ function OwnerRestaurantRegistrationForm() {
             <InputField name="hours" label="Hours" type="text" value={form.hours} onChange={handleChange} placeholder="Enter Working hours" />
             <InputField name="description" label="Description" value={form.description} onChange={handleChange} placeholder="Enter what you serve" />
             <InputField name="menu" label="Menu" type="text" value={form.menu} onChange={handleChange} placeholder="e.g. injera, tibs, coffee" />
-
+            <InputField name="latitude" label="Latitude" type="number" value={form.latitude} onChange={handleChange} placeholder="Lat" />
+            <InputField name="longitude" label="Longitude" type="number" value={form.longitude} onChange={handleChange} placeholder="Long" />
             <div className="form-group" style={{ marginBottom: 12 }}>
                 <label htmlFor="image">Profile Image</label>
                 <input id="image" name="image" type="file" accept="image/*" onChange={handleImageChange} />
