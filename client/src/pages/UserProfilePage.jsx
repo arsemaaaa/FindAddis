@@ -6,8 +6,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
 
-import OwnerDashboard from "./OwnerDashBoard";
-
 function UserProfilePage() {
   const { user, isAdmin, isOwner, logout } = useContext(AuthContext);
   const [requests, setRequests] = React.useState([]);
@@ -76,7 +74,7 @@ function UserProfilePage() {
         {
           user.role === "owner" &&
           <div>
-            <Button onClick={() => navigate("/OwnerDashBoard")}>Go to your dashboard</Button>
+            <Button onClick={() => navigate("/OwnerDashboard")}>Go to your dashboard</Button>
           </div>
         }
         <button className="button button-outline" onClick={logout}>Log Out</button>
