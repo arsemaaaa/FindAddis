@@ -7,7 +7,7 @@ import Placeholder from "../../assets/addis-cafe.jpg";
 
 function RestaurantCard({ restaurant }) {
   const { toggleFavorite, isFavorite } = useContext(RestaurantsContext);
-  const fav = isFavorite ? isFavorite(restaurant.id) : false;
+  const fav = isFavorite ? isFavorite(restaurant._id) : false;
 
   const imgSrc = (restaurant.images && restaurant.images.length > 0 && restaurant.images[0]) || Placeholder;
 
@@ -15,7 +15,7 @@ function RestaurantCard({ restaurant }) {
     <div className="restaurant-card">
       <div className="restaurant-image-wrap">
         <Link
-          to={`/restaurants/${restaurant.id}`}
+          to={`/restaurants/${restaurant._id}`}
           className="restaurant-image-link"
         >
           <img
@@ -28,7 +28,7 @@ function RestaurantCard({ restaurant }) {
         </Link>
         <button
           className={`favorite-btn ${fav ? "fav-active" : ""}`}
-          onClick={() => toggleFavorite && toggleFavorite(restaurant.id)}
+          onClick={() => toggleFavorite && toggleFavorite(restaurant._id)}
           aria-label={fav ? "Remove from favorites" : "Add to favorites"}
           aria-pressed={fav ? "true" : "false"}
           title={fav ? "Remove from favorites" : "Add to favorites"}
@@ -63,7 +63,7 @@ function RestaurantCard({ restaurant }) {
         </button>
       </div>
       <div className="restaurant-card-body">
-        <Link to={`/restaurants/${restaurant.id}`} className="restaurant-name">
+        <Link to={`/restaurants/${restaurant._id}`} className="restaurant-name">
           {restaurant.name}
         </Link>
         <div className="restaurant-meta">

@@ -9,7 +9,6 @@ import RestaurantsContext from "../context/RestaurantsContext";
 function RestaurantListPage() {
   const { restaurants } = useContext(RestaurantsContext);
   const [filters, setFilters] = useState({ category: "", minRating: 0 });
-console.log("RestaurantListPage",restaurants)
   const filtered = useMemo(() => {
     return restaurants.filter((r) => (!filters.category || r.category === filters.category) && r.rating >= filters.minRating);
   }, [restaurants, filters]);

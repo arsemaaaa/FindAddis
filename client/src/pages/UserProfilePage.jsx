@@ -3,6 +3,8 @@ import { useContext } from "react";
 import UserProfile from "../components/user/UserProfile";
 import AuthContext from "../context/AuthContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Button from "../components/common/Button";
 
 function UserProfilePage() {
   const { user, isAdmin, isOwner, logout } = useContext(AuthContext);
@@ -13,19 +15,18 @@ function UserProfilePage() {
   const [formData, setFormData] = React.useState({ name: '', description: '', menu: '' });
   const [msg, setMsg] = React.useState(null);
 
+  // Admin: Fetch pending requests
+  /* React.useEffect(() => {
+    if (isAdmin()) {
+      fetchRequests();
+    }
+  }, [user]); */
+
   function fetchRequests() {
     axios.get('http://localhost:3000/api/requests')
       .then(res => setRequests(res.data))
       .catch(err => console.error("Failed to fetch requests", err));
   }
-  // Admin: Fetch pending requests
-  React.useEffect(() => {
-    if (isAdmin()) {
-      fetchRequests();
-    }
-  }, [user]);
-
-
 
   function handleApprove(id) {
     axios.post(`http://localhost:3000/api/requests/${id}/approve`)
@@ -63,15 +64,24 @@ function UserProfilePage() {
       })
       .catch(err => setMsg("Error submitting request: " + err.message));
   }
-
+  const navigate = useNavigate();
   if (!user) return <div className="container"><h2>Please log in to view your profile.</h2></div>;
 
   return (
     <div className="profile-page container">
       <div className="profile-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-        <h1 className="page-title">Dashboard</h1>
+        <h1 className="title">Profile</h1>
+        {
+          user.role === "owner" &&
+          <div>
+            <Button onClick={() => navigate("/OwnerDashBoard")}>Go to your dashboard</Button>
+          </div>
+        }
         <button className="button button-outline" onClick={logout}>Log Out</button>
+
+
       </div>
+
 
       <UserProfile user={user} />
 

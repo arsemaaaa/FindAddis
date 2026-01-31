@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 
 function OwnerLoginPage() {
   const { ownerLogin } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const navigate = useNavigate('/addRestaurant');
 
   async function handleLogin(credentials) {
     try {
       await ownerLogin(credentials);
-      navigate("/");
+      navigate("/OwnerDashBoard");
     } catch (e) {
       alert(e);
     }

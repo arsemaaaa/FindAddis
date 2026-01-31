@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs"
 import crypto from "crypto"
 import SendEmail from '../utils/Mailer.js';
 import RestaurantOwners from '../models/RestaurantOwner.js'
+import ownerAuthMiddleware from '../middleware/ownerAuthMiddleware.js';
 import jwt from 'jsonwebtoken'
 const router = Router();
 
@@ -24,7 +25,7 @@ router.post('/', async (req, res) => {
         const newOwner = new RestaurantOwners({ name, email, password: hashedPassword, phoneNumber, token: hashedToken, emailVerificationExpiry: verificationExpiry });
         await newOwner.save();
 
-        const verificationLink = "http://localhost:3000/api/RestaurantOwners/verify?token=" + token + "&email=" + email;
+        const verificationLink = "http://localhost:3000/api/owners/verify?token=" + token + "&email=" + email;
         try {
             SendEmail(process.env.EMAIL, newOwner.email, 'verify findAddis account', verificationLink)
             res.status(201).json({ message: "Restaurant Owner registered successfully. Please verify your email using the link sent to your account" });
@@ -60,8 +61,6 @@ router.get('/verify', async (req, res) => {
     }
     const tokenToverify = unverifiedOwner.token;
     const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
-    console.log("tokento verify", tokenToverify)
-    console.log("hashed token", hashedToken)
     if (tokenToverify != hashedToken) {
         res.status(400).json({ msg: 'invalid token requested' })
         return;
@@ -100,5 +99,22 @@ router.post('/login', async (req, res) => {
 
 
 })
+
+// get owner's restaurant
+router.get("/restaurants", ownerAuthMiddleware, async (req, res) => {
+    try {
+        if (req.owner.role !== "owner") {
+            return res.status(400).send({ msg: "Operation not allowed" });
+        }
+
+        // Get owner Restaurant
+        const ownerRestaurants = await RestaurantOwners.findById(req.owner.id).populate('restaurantsOwned')
+        // Return restaurantsOwned array or empty array if none
+        res.status(200).json(ownerRestaurants?.restaurantsOwned || []);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 
 export default router;

@@ -13,7 +13,7 @@ function OwnerSignupForm({ onSignup }) {
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            const res = await fetch("http://localhost:3000/api/RestaurantOwners", {
+            const res = await fetch("http://localhost:3000/api/owners", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
