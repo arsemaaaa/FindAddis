@@ -8,7 +8,7 @@ import axios from "axios";
 
 function OwnerDashboard() {
     const { user, token } = useContext(AuthContext);
-    const { setRestaurants } = useContext(RestaurantsContext); // update global context
+    const { addRestaurant } = useContext(RestaurantsContext); // update global context via addRestaurant
     const [ownerRestaurants, setOwnerRestaurants] = useState([]); // local state for this dashboard
     const [showForm, setShowForm] = useState(false);
     const navigate = useNavigate();
@@ -46,10 +46,10 @@ function OwnerDashboard() {
                 <OwnerRestaurantRegistrationForm
                     ownerId={user._id}
                     onSuccess={(newRestaurant) => {
-                        setOwnerRestaurants([...ownerRestaurants, newRestaurant]); // update local state
-                        setRestaurants((prev) => [...prev, newRestaurant]); // update global context
+                        setOwnerRestaurants((prev) => [...prev, newRestaurant]); // update local state
+                        addRestaurant(newRestaurant); // update global context
                         setShowForm(false); // hide form
-                        navigate(`/owner/restaurants/${newRestaurant._id}/edit`);
+                        // stay on the dashboard — no redirect
                     }}
                 />
             )}
@@ -61,7 +61,12 @@ function OwnerDashboard() {
                 ) : (
                     <div className="featured-row">
                         {ownerRestaurants.map((r) => (
-                            <FeaturedCard key={r._id} restaurant={r} showDeleteButton={true} />
+                            <FeaturedCard
+                                key={r._id}
+                                restaurant={r}
+                                showDeleteButton={true}
+                                onDelete={(id) => setOwnerRestaurants((prev) => prev.filter((rr) => rr._id !== id))}
+                            />
                         ))}
                     </div>
                 )}

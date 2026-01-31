@@ -11,7 +11,7 @@ import TomocaImg from '../../assets/tomoca.png';
 import Placeholder from "../../assets/addis-cafe.jpg";
 
 
-function FeaturedCard({ restaurant, showDeleteButton }) {
+function FeaturedCard({ restaurant, showDeleteButton, onDelete }) {
 
   const { toggleFavorite, isFavorite, deleteRestaurant } = useContext(RestaurantsContext);
   const fav = isFavorite ? isFavorite(restaurant._id) : false;
@@ -78,7 +78,23 @@ function FeaturedCard({ restaurant, showDeleteButton }) {
         <div className="featured-footer">
           {restaurant.address && <div className="featured-address">{restaurant.address}</div>}
           <Link to={`/restaurants/${restaurant._id}`} className="button button-small">View</Link>
-          {showDeleteButton && <button onClick={() => deleteRestaurant(restaurant._id)} className="button button-small">delete</button>}
+          {showDeleteButton && (
+            <button
+              onClick={() => {
+                if (!deleteRestaurant) return;
+                deleteRestaurant(restaurant._id)
+                  .then(() => {
+                    if (typeof onDelete === 'function') onDelete(restaurant._id);
+                  })
+                  .catch(() => {
+                    // optionally handle error (alert or toast)
+                  });
+              }}
+              className="button button-small"
+            >
+              delete
+            </button>
+          )}
 
         </div>
       </div>

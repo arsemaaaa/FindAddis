@@ -19,7 +19,8 @@ L.Icon.Default.mergeOptions({
 
 const MapSection = ({ location, name }) => {
     // Default to Addis Ababa if no location
-    const position = location && location.lat && location.lng ? [location.lat, location.lng] : [9.03, 38.74];
+    const isLatAndLogProvided = location && location.lat && location.lng && location.lat != '' && location.lng != ''
+    const position = isLatAndLogProvided ? [location.lat, location.lng] : [9.03, 38.74];
 
     return (
         <div style={{ height: '350px', width: '100%', marginTop: '2rem', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e0e0e0' }}>

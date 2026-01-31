@@ -7,17 +7,179 @@
     padding: 20px;
 }
 
-/* Navbar: using Bootstrap now. Keep a minimal override for brand to match project colors */
-.navbar {
-    position: relative;
-    z-index: 1000;
+/* =======================
+   Navbar
+======================= */
+/* =======================
+   Navbar
+======================= */
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 12px 20px;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.navbar-brand {
+.nav-left {
+    display: flex;
+    align-items: center;
+    min-width: 140px;
+}
+
+.nav-logo {
     font-weight: 800;
-    color: var(--accent) !important;
+    color: var(--accent);
+    text-decoration: none;
     font-size: 24px;
     letter-spacing: -0.5px;
+}
+
+/* Yelp-style Search Bar */
+.nav-search-bar {
+    flex: 1;
+    max-width: 700px;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 20px;
+    border: 1px solid #ddd;
+    height: 46px;
+}
+
+.search-group {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    position: relative;
+    height: 100%;
+}
+
+.search-label {
+    font-weight: 700;
+    font-size: 14px;
+    color: #333;
+    margin-right: 8px;
+    white-space: nowrap;
+    display: none;
+    /* Hide label on small screens or keep distinct? Yelp usually puts placeholder or label inside. */
+}
+
+/* Show labels on larger screens if desired equivalent to Yelp's left-side text in input group, 
+   but typically it's placeholder. 
+   Wait, the user image shows standard search. 
+   Looking at Yelp desktop: It's "Find [input] | Near [input]". 
+   The inputs have "tacos" etc placeholder. 
+   I will make the 'Find' and 'Near' text essentially labels that sit next to input. 
+*/
+.search-label {
+    display: block;
+    color: #666;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 15px;
+    color: #333;
+    padding: 4px;
+    background: transparent;
+}
+
+.search-input::placeholder {
+    color: #999;
+    font-weight: 400;
+}
+
+.search-divider {
+    width: 1px;
+    height: 24px;
+    background: #ddd;
+}
+
+.search-btn {
+    width: 48px;
+    height: 46px;
+    background: var(--accent);
+    border: none;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    transition: background 0.2s;
+}
+
+.search-btn:hover {
+    background: var(--accent-dark);
+}
+
+/* Right Side Actions */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-actions .nav-link {
+    font-weight: 600;
+    color: #555;
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.1s;
+}
+
+.nav-actions .nav-link:hover {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-login {
+    font-weight: 700;
+    color: #555;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.1s;
+}
+
+.auth-login:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.auth-signup {
+    /* Primary button style overlay */
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-block;
 }
 
 /* =======================

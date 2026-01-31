@@ -105,18 +105,21 @@ export function RestaurantsProvider({ children }) {
   }
 
   async function deleteRestaurant(restaurantId) {
-    // remove from DB
-    axios.delete(`http://localhost:3000/api/restaurants/${restaurantId}`, {
+    // remove from DB and return the promise so callers can react
+    return axios.delete(`http://localhost:3000/api/restaurants/${restaurantId}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
       .then(() => {
         // remove from local state
-        setRestaurants((prev) => prev.filter(r => r._id != restaurantId));
-        alert('Your restaurant is removed from our system')
+        setRestaurants((prev) => prev.filter((r) => r._id !== restaurantId));
+        alert('Your restaurant is removed from our system');
       })
-      .catch((err) => console.error("Error deleting review", err));
+      .catch((err) => {
+        console.error("Error deleting restaurant", err);
+        throw err;
+      });
   }
 
   function updateRestaurantImage(restaurantId, dataUrl) {
