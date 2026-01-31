@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import RestaurantsContext from "../context/RestaurantsContext";
 import FeaturedCard from "../components/home/FeaturedCard";
@@ -11,7 +10,6 @@ function OwnerDashboard() {
     const { addRestaurant } = useContext(RestaurantsContext); // update global context via addRestaurant
     const [ownerRestaurants, setOwnerRestaurants] = useState([]); // local state for this dashboard
     const [showForm, setShowForm] = useState(false);
-    const navigate = useNavigate();
 
     // Fetch owned restaurants on mount
     useEffect(() => {
