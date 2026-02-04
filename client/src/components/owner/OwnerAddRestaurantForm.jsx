@@ -63,7 +63,7 @@ function OwnerRestaurantRegistrationForm({ onSuccess }) {
                 images: imageDataUrl ? [imageDataUrl] : [] // send as an array with full data URL prefix
             };
 
-            const res = await axios.post("http://localhost:3000/api/restaurants",
+            const res = await axios.post("/api/restaurants",
                 payload,
                 {
                     headers: {

@@ -1,5 +1,5 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
 
@@ -13,30 +13,19 @@ function SignupForm({ onSignup }) {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:3000/api/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          password: form.password
-        })
+      const res = await axios.post("/api/users", {
+        name: form.name,
+        email: form.email,
+        password: form.password
       });
-      const data = await res.json();
-      if (!res.ok) {
-        alert(data.message);
-        return;
-      }
       alert("Account created successfully!");
     } catch (err) {
-
       console.error(err);
-      alert("Server error");
+      alert(err.response?.data?.msg || err.response?.data?.message || "Server error");
     }
     if (onSignup) onSignup(form);
   }
+
 
   return (
     <form className="signup-form" onSubmit={handleSubmit}>

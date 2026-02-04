@@ -15,7 +15,7 @@ function OwnerDashboard() {
     useEffect(() => {
         const fetchOwnedRestaurants = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/api/owners/restaurants", {
+                const res = await axios.get("/api/owners/restaurants", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setOwnerRestaurants(res.data); // res.data is an array of restaurant objec

@@ -25,9 +25,9 @@ router.post('/', async (req, res) => {
         const newOwner = new RestaurantOwners({ name, email, password: hashedPassword, phoneNumber, token: hashedToken, emailVerificationExpiry: verificationExpiry });
         await newOwner.save();
 
-        const verificationLink = "http://localhost:3000/api/owners/verify?token=" + token + "&email=" + email;
+        const verificationLink = (process.env.APP_URL || "http://localhost:3000") + "/api/owners/verify?token=" + token + "&email=" + email;
         try {
-            SendEmail(process.env.EMAIL, newOwner.email, 'verify findAddis account', verificationLink)
+            await SendEmail(process.env.EMAIL, newOwner.email, 'verify findAddis account', verificationLink)
             res.status(201).json({ message: "Restaurant Owner registered successfully. Please verify your email using the link sent to your account" });
 
         } catch (err) {

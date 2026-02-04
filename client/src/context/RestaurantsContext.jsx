@@ -9,7 +9,7 @@ export function RestaurantsProvider({ children }) {
   const [restaurants, setRestaurants] = React.useState([]);
 
   React.useEffect(() => {
-    axios.get("http://localhost:3000/api/restaurants")
+    axios.get("/api/restaurants")
       .then((res) => {
         if (res.data.length === 0) {
           setRestaurants([]);
@@ -32,7 +32,7 @@ export function RestaurantsProvider({ children }) {
       setFavorites([])
       return
     }
-    axios.get("http://localhost:3000/api/users/favorites", {
+    axios.get("/api/users/favorites", {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -49,7 +49,7 @@ export function RestaurantsProvider({ children }) {
   }, [token]);
 
   async function addReview(restaurantId, review) {
-    return axios.post(`http://localhost:3000/api/restaurants/${restaurantId}/reviews`, review,
+    return axios.post(`/api/restaurants/${restaurantId}/reviews`, review,
       {
         headers: {
           Authorization: ` Bearer ${token}`
@@ -75,7 +75,7 @@ export function RestaurantsProvider({ children }) {
   }
 
   async function editReview(restaurantId, reviewId, updated) {
-    axios.put(`http://localhost:3000/api/restaurants/${restaurantId}/reviews/${reviewId}`, updated)
+    axios.put(`/api/restaurants/${restaurantId}/reviews/${reviewId}`, updated)
       .then((res) => {
         console.log(res)
         setRestaurants((prev) =>
@@ -90,7 +90,7 @@ export function RestaurantsProvider({ children }) {
   }
 
   async function deleteReview(restaurantId, reviewId) {
-    axios.delete(`http://localhost:3000/api/restaurants/${restaurantId}/reviews/${reviewId}`)
+    axios.delete(`/api/restaurants/${restaurantId}/reviews/${reviewId}`)
       .then(() => {
         setRestaurants((prev) =>
           prev.map((r) => (r._id === restaurantId ? { ...r, reviews: (r.reviews || []).filter((rv) => rv.id !== reviewId && rv._id !== reviewId) } : r))
@@ -106,7 +106,7 @@ export function RestaurantsProvider({ children }) {
 
   async function deleteRestaurant(restaurantId) {
     // remove from DB and return the promise so callers can react
-    return axios.delete(`http://localhost:3000/api/restaurants/${restaurantId}`, {
+    return axios.delete(`/api/restaurants/${restaurantId}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -136,7 +136,7 @@ export function RestaurantsProvider({ children }) {
 
     // add or remove user favorite list from db by calling rest api. 
     if (isFavoriteToAdd) {
-      return axios.post(`http://localhost:3000/api/users/favorites/${restaurantId}`,
+      return axios.post(`/api/users/favorites/${restaurantId}`,
         null, // no payload needed
         {
           headers: {
@@ -149,7 +149,7 @@ export function RestaurantsProvider({ children }) {
         })
         .catch((err) => console.error("Error adding user's favorite", err));
     } else {
-      return axios.delete(`http://localhost:3000/api/users/favorites/${restaurantId}`,
+      return axios.delete(`/api/users/favorites/${restaurantId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

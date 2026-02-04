@@ -11,7 +11,6 @@ export function AuthProvider({ children }) {
       const stored = localStorage.getItem("fa_user");
       return stored ? JSON.parse(stored) : null;
     } catch (e) {
-      console.log(e)
       return null;
     }
   });
@@ -20,7 +19,6 @@ export function AuthProvider({ children }) {
     try {
       return localStorage.getItem("fa_token") || null;
     } catch (e) {
-      console.log(e)
       return null;
     }
   });
@@ -47,7 +45,7 @@ export function AuthProvider({ children }) {
 
   async function login(credentials) {
     try {
-      const res = await axios.post("http://localhost:3000/api/users/login", credentials);
+      const res = await axios.post("/api/users/login", credentials);
       const decoded = jwtDecode(res.data.token);
 
       setUser(decoded);
@@ -62,7 +60,7 @@ export function AuthProvider({ children }) {
   async function ownerLogin(credentials) {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/owners/login",
+        "/api/owners/login",
         credentials
       );
       const decoded = jwtDecode(res.data.token);
@@ -79,6 +77,46 @@ export function AuthProvider({ children }) {
     }
   }
 
+
+  async function adminLogin(credentials) {
+    try {
+      const res = await axios.post(
+        "/api/admin/login",
+        credentials
+      );
+      const decoded = jwtDecode(res.data.token);
+      setUser(decoded);
+      setToken(res.data.token);
+
+      localStorage.setItem("role", "admin");
+
+      return res.data;
+    } catch (err) {
+      console.error("Admin login failed", err);
+      throw err.response?.data?.message || "Admin login failed";
+    }
+  }
+
+  async function signup(details) {
+    try {
+      const res = await axios.post("/api/users", details);
+      return res.data;
+    } catch (err) {
+      console.error("Signup failed", err);
+      throw err.response?.data?.msg || err.response?.data?.message || "Signup failed";
+    }
+  }
+
+  async function ownerSignup(details) {
+    try {
+      const res = await axios.post("/api/owners", details);
+      return res.data;
+    } catch (err) {
+      console.error("Owner signup failed", err);
+      throw err.response?.data?.msg || err.response?.data?.message || err.response?.data?.error || "Owner signup failed";
+    }
+  }
+
   function logout() {
     setUser(null);
     setToken(null);
@@ -88,7 +126,7 @@ export function AuthProvider({ children }) {
   const isOwner = () => user?.role === "restaurant_owner" || !!user?.managedRestaurantId;
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isAdmin, isOwner, ownerLogin }}>
+    <AuthContext.Provider value={{ user, token, login, logout, signup, ownerSignup, isAdmin, isOwner, ownerLogin, adminLogin }}>
       {children}
     </AuthContext.Provider>
   );

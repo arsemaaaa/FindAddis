@@ -23,13 +23,13 @@ function UserProfilePage() {
   }, [user]); */
 
   function fetchRequests() {
-    axios.get('http://localhost:3000/api/requests')
+    axios.get('/api/requests')
       .then(res => setRequests(res.data))
       .catch(err => console.error("Failed to fetch requests", err));
   }
 
   function handleApprove(id) {
-    axios.post(`http://localhost:3000/api/requests/${id}/approve`)
+    axios.post(`/api/requests/${id}/approve`)
       .then(() => {
         alert("Request approved!");
         fetchRequests();
@@ -38,7 +38,7 @@ function UserProfilePage() {
   }
 
   function handleReject(id) {
-    axios.post(`http://localhost:3000/api/requests/${id}/reject`)
+    axios.post(`/api/requests/${id}/reject`)
       .then(() => {
         alert("Request rejected.");
         fetchRequests();
@@ -57,7 +57,7 @@ function UserProfilePage() {
       }
     };
 
-    axios.post('http://localhost:000/api/requests', payload)
+    axios.post('/api/requests', payload)
       .then(() => {
         setMsg("Update request submitted for approval.");
         setIsEditing(false);

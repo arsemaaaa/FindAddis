@@ -37,9 +37,10 @@ router.post('/', async (req, res) => {
         await newUser.save();
 
         //send token to users Email
-        const verificationLink = "http://localhost:3000/api/users/verify?token=" + token + "&email=" + email;
+        const verificationLink = (process.env.APP_URL || "http://localhost:3000") + "/api/users/verify?token=" + token + "&email=" + email;
+
         try {
-            SendEmail(process.env.EMAIL, newUser.email, 'verify findAddis account', verificationLink)
+            await SendEmail(process.env.EMAIL, newUser.email, 'verify findAddis account', verificationLink)
             res.status(201).json({ msg: "User registered successfully. Please verify your email using the link sent to your account" });
         } catch (err) {
             res.status(500).send({ msg: 'Unable to send verification email to user' })
